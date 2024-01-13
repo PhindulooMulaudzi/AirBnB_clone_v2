@@ -20,7 +20,7 @@ if storage_type == 'db':
 
 class Place(BaseModel, Base):
     """ A place to stay """
-    if models.storage_t == 'db':
+    if storage_type == 'db':
         __tablename__ = 'places'
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
@@ -32,9 +32,9 @@ class Place(BaseModel, Base):
         price_by_night = Column(Integer, nullable=False, default=0)
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
-        # amenities = relationship("Amenity", secondary="place_amenity",
-        #                          backref="place_amenities",
-        #                          viewonly=False)
+        amenities = relationship("Amenity", secondary="place_amenity",
+                                 backref="place_amenities",
+                                 viewonly=False)
         reviews = relationship("Review", backref="place")
 
     else:

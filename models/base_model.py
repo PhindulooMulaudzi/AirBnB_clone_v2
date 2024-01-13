@@ -7,7 +7,7 @@ from datetime import datetime
 import models
 import uuid
 
-if models.storage_type == "db":
+if storage_typeype == "db":
     Base = declarative_base()
 else:
     Base = object
@@ -15,7 +15,7 @@ else:
 
 class BaseModel:
     """A base class for all hbnb models"""
-    if models.storage_type == "db":
+    if storage_typeype == "db":
         id = Column(String(60), primary_key=True)
         created_at = Column(DateTime, default=datetime.utcnow)
         updated_at = Column(DateTime, default=datetime.utcnow)
