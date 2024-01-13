@@ -6,21 +6,40 @@ from datetime import datetime
 
 class BaseModel:
     """A base class for all hbnb models"""
+
     def __init__(self, *args, **kwargs):
         """Instatntiates a new model"""
-        if not kwargs:
-            from models import storage
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
-            storage.new(self)
-        else:
-            kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
-                                                     '%Y-%m-%dT%H:%M:%S.%f')
-            kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
-                                                     '%Y-%m-%dT%H:%M:%S.%f')
-            del kwargs['__class__']
-            self.__dict__.update(kwargs)
+        try:
+            self.id = str(uuid.UUID(kwargs.get("id", str(uuid.uuid4()))))
+        except ValueError:
+            raise ValueError("Invalid UUID provided for 'id'")
+
+        time_format = "%Y-%m-%dT%H:%M:%S.%fZ"
+
+        try:
+            self.created_at = (
+                datetime.strptime(kwargs.get("created_at"), time_format)
+                if kwargs.get("created_at") and isinstance(kwargs["created_at"], str)
+                else datetime.utcnow()
+            )
+        except (ValueError, TypeError):
+            raise ValueError(
+                "Invalid datetime format provided for 'created_at'")
+
+        try:
+            self.updated_at = (
+                datetime.strptime(kwargs.get("updated_at"), time_format)
+                if kwargs.get("updated_at") and isinstance(kwargs["updated_at"], str)
+                else datetime.utcnow()
+            )
+        except (ValueError, TypeError):
+            raise ValueError(
+                "Invalid datetime format provided for 'updated_at'")
+
+        # Set other keyword arguments as attributes
+        for key, value in kwargs.items():
+            if key != "__class__" and key not in ["id", "created_at", "updated_at"]:
+                setattr(self, key, value)
 
     def __str__(self):
         """Returns a string representation of the instance"""
@@ -30,7 +49,8 @@ class BaseModel:
     def save(self):
         """Updates updated_at with current time when instance is changed"""
         from models import storage
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.utcnow()
+        storage.new(self)
         storage.save()
 
     def to_dict(self):
