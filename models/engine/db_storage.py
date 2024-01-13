@@ -45,7 +45,7 @@ class DBStorage:
         result_dict = {}
 
         try:
-            for class_name, class_instance in self.classes.items():
+            for class_name, class_instance in classes.items():
                 if target_class is None or target_class is class_instance or\
                         target_class is class_name:
                     objects = self.__session.query(class_instance).all()
