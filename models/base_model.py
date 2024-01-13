@@ -4,7 +4,7 @@
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
-import models
+from models import storage_type
 import uuid
 
 if storage_type == "db":
