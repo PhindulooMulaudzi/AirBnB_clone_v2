@@ -14,7 +14,7 @@ class BaseModel:
         except ValueError:
             raise ValueError("Invalid UUID provided for 'id'")
 
-        time_format = "%Y-%m-%dT%H:%M:%S.%fZ"
+        time_format = "%Y-%m-%dT%H:%M:%S.%f"
 
         try:
             self.created_at = (
