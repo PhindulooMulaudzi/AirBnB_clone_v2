@@ -54,8 +54,7 @@ class DBStorage:
                         result_dict[key] = obj
 
         except Exception as e:
-            print(f"Error: {e}")
-            return None
+            print(f"Error in db storage all(): {e}")
 
         return result_dict
 
