@@ -9,7 +9,7 @@ from models import storage_type
 from models.city import City
 
 
-class User(BaseModel):
+class User(BaseModel, Base):
     """This class defines a user by various attributes"""
     if storage_type == 'db':
         __tablename__ = 'users'
