@@ -29,17 +29,11 @@ class FileStorage:
         self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
 
     def delete(self, obj=None):
-        try:
-            if obj is not None:
-                key = "{}.{}".format(obj.__class__.__name__, obj.id)
-                if key in self.__objects:
-                    del self.__objects[key]
-                    # self.save()
-
-        except KeyError as ke:
-            print(f"KeyError while removing object: {ke}")
-        except Exception as e:
-            print(f"Error while removing object: {e}")
+        if obj is not None:
+            key = "{}.{}".format(obj.__class__.__name__, obj.id)
+            if key in self.__objects:
+                del self.__objects[key]
+                self.save()
 
     def save(self):
         """Saves storage dictionary to file"""
