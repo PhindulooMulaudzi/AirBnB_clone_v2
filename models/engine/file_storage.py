@@ -31,9 +31,10 @@ class FileStorage:
     def delete(self, obj=None):
         try:
             if obj is not None:
-                key = f"{obj.__class__.__name__}.{obj.id}"
+                key = "{}.{}".format(obj.__class__.__name__, obj.id)
                 if key in self.__objects:
                     del self.__objects[key]
+                    self.save()
         except KeyError as ke:
             print(f"KeyError while removing object: {ke}")
         except Exception as e:
