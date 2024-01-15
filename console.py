@@ -142,7 +142,7 @@ class HBNBCommand(cmd.Cmd):
 
         return result_dict
 
-    def do_create(self, args):
+    def do_create(self, arg):
         """Creates a new instance of a class"""
         args = arg.split()
         if len(args) == 0:
