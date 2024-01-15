@@ -143,7 +143,8 @@ class HBNBCommand(cmd.Cmd):
         return result_dict
 
     def do_create(self, args):
-        """Create an object of any class."""
+        """ Create an object of any class"""
+
         if not args:
             print("** class name missing **")
             return
