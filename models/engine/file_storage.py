@@ -9,18 +9,17 @@ class FileStorage:
     __objects = {}
 
     def all(self, cls=None):
-        """Returns a dictionary of models currently in storage"""
+        """Return a dictionary of models currently in storage."""
         try:
             if cls is not None:
                 filtered_objects = {
                     key: value for key, value in self.__objects.items()
-                    if isinstance(value, cls) or cls == value.__class__.__name__
+                    if isinstance(value, cls) or
+                    cls == value.__class__.__name__
                 }
                 return filtered_objects
         except (AttributeError, TypeError) as e:
             print(f"Error during class filtering: {e}")
-        except Exception as e:
-            print(f"Unexpected error: {e}")
 
         return self.__objects
 
