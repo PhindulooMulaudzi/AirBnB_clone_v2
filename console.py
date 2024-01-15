@@ -144,6 +144,9 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """Creates a new instance of a class"""
+        classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
+                   "Place": Place, "Review": Review,
+                   "State": State, "User": User}
         args = arg.split()
         if len(args) == 0:
             print("** class name missing **")
